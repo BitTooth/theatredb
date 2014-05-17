@@ -20,7 +20,7 @@ namespace TheatreDB.Forms
 
         private void authButton_Click(object sender, EventArgs e)
         {
-            
+
         }
     }
 }
