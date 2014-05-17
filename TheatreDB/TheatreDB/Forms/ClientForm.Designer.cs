@@ -81,6 +81,7 @@
             this.feedbacksButton.TabIndex = 4;
             this.feedbacksButton.Text = "Отзывы";
             this.feedbacksButton.UseVisualStyleBackColor = true;
+            this.feedbacksButton.Click += new System.EventHandler(this.feedbacksButton_Click);
             // 
             // infoButton
             // 

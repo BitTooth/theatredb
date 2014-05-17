@@ -58,5 +58,10 @@ namespace TheatreDB.Forms
                 this.Hide();
             }
         }
+
+        public string getLogin()
+        {
+            return customer.email;
+        }
     }
 }

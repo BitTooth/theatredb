@@ -80,5 +80,11 @@ namespace TheatreDB.Forms
         {
             selectedPlay = playList[playsListBox.SelectedIndex];
         }
+
+        private void feedbacksButton_Click(object sender, EventArgs e)
+        {
+            FeedbacksForm feedbacksForm = new FeedbacksForm(dbConnection, selectedPlay, loginForm.getLogin());
+            feedbacksForm.ShowDialog();
+        }
     }
 }
