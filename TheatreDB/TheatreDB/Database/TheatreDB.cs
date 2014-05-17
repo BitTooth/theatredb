@@ -41,6 +41,14 @@ namespace TheatreDB.Database
             return pl;
         }
 
+        private Genre readGenreData(MySqlDataReader rdr)
+        {
+            Genre g = new Genre();
+            g.ID = rdr.GetUInt32(0);
+            g.name = rdr.GetString(1);
+            return g;
+        }
+
         public List<Play> getPlayList()
         {
             List<Play> list = new List<Play>();
@@ -78,6 +86,22 @@ namespace TheatreDB.Database
         public List<Play> getPlayListByGenre(Genre genre)
         {
             return getPlayListByGenre(genre.name);
+        }
+
+        public List<Genre> getGenreList()
+        {
+            List<Genre> list = new List<Genre>();
+            MySqlDataReader rdr = null;
+            string stm = @"SELECT * FROM жанры";
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(readGenreData(rdr));
+            }
+
+            return list;
         }
 
         private MySqlConnection connection;
