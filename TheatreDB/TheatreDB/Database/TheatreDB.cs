@@ -72,6 +72,8 @@ namespace TheatreDB.Database
                 list.Add(readPlayData(rdr));
             }
 
+            rdr.Close();
+
             return list;
         }
 
@@ -89,6 +91,8 @@ namespace TheatreDB.Database
             {
                 list.Add(readPlayData(rdr));
             }
+
+            rdr.Close();
 
             return list;
         }
@@ -110,6 +114,8 @@ namespace TheatreDB.Database
             {
                 list.Add(readGenreData(rdr));
             }
+
+            rdr.Close();
 
             return list;
         }
@@ -140,6 +146,8 @@ namespace TheatreDB.Database
                     customer.password = rdr.GetString(1);
                     customer.ID = rdr.GetUInt32(0);
                 }
+
+                rdr.Close();
             }
 
             return customer;
@@ -166,6 +174,8 @@ namespace TheatreDB.Database
             {
                 list.Add(readReviewData(rdr));
             }
+
+            rdr.Close();
 
             return list;
         }
