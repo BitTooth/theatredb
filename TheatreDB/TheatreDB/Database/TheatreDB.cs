@@ -59,6 +59,16 @@ namespace TheatreDB.Database
             return r;
         }
 
+        private PlayInstance readPlayInstanceData(MySqlDataReader rdr)
+        {
+            PlayInstance pi = new PlayInstance();
+            pi.date = rdr.GetString(0);
+            pi.playName = rdr.GetString(1);
+            pi.canceled = rdr.GetBoolean(2);
+            pi.ID = rdr.GetUInt32(3);
+            return pi;
+        }
+
         public List<Play> getPlayList()
         {
             List<Play> list = new List<Play>();
@@ -76,8 +86,7 @@ namespace TheatreDB.Database
 
             return list;
         }
-
-
+        
         public List<Play> getPlayListByGenre(string name)
         {
             List<Play> list = new List<Play>();
@@ -189,6 +198,30 @@ namespace TheatreDB.Database
                 "(SELECT `посетители`.`id_login` FROM `посетители` WHERE `email` = '{2}'));", id, text, loginName, playName);
             MySqlCommand cmd = new MySqlCommand(stm, connection);
             cmd.ExecuteNonQuery();
+        }
+
+        public List<PlayInstance> getPlayInstanceListByName(string playName)
+        {
+            List<PlayInstance> list = new List<PlayInstance>();
+            MySqlDataReader rdr = null;
+            string stm = string.Format(@"SELECT `проведение_спектакля`.`дата_время`," +
+                                 "`спектакль`.`название`," +
+                                 "`проведение_спектакля`.`отменён`," +
+                                 "`проведение_спектакля`.`ID`" +
+                          " FROM `проведение_спектакля` LEFT JOIN `спектакль`" +
+                          " ON `проведение_спектакля`.`id_спектакля`=`спектакль`.`id_спектакля`"+
+                          " WHERE `спектакль`.`название` = '{0}';", playName);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(readPlayInstanceData(rdr));
+            }
+
+            rdr.Close();
+
+            return list;
         }
 
         private MySqlConnection connection;
