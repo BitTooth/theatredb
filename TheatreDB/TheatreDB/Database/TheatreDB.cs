@@ -59,6 +59,35 @@ namespace TheatreDB.Database
             return r;
         }
 
+        private PlayInstance readPlayInstanceData(MySqlDataReader rdr)
+        {
+            PlayInstance pi = new PlayInstance();
+            pi.date = rdr.GetString(0);
+            pi.playName = rdr.GetString(1);
+            pi.canceled = rdr.GetBoolean(2);
+            pi.ID = rdr.GetUInt32(3);
+            return pi;
+        }
+
+        private Hall readHallData(MySqlDataReader rdr)
+        {
+            Hall h = new Hall();
+            h.name = rdr.GetString(0);
+            h.ID = rdr.GetUInt32(1);
+            return h;
+        }
+
+        private HallSeat readHallSeatData(MySqlDataReader rdr)
+        {
+            HallSeat hs = new HallSeat();
+            hs.row = rdr.GetUInt32(0);
+            hs.num = rdr.GetUInt32(1);
+            hs.margin = rdr.GetString(2);
+            hs.hall = rdr.GetString(3);
+            hs.ID = rdr.GetUInt32(4);
+            return hs;
+        }
+
         public List<Play> getPlayList()
         {
             List<Play> list = new List<Play>();
@@ -76,8 +105,7 @@ namespace TheatreDB.Database
 
             return list;
         }
-
-
+        
         public List<Play> getPlayListByGenre(string name)
         {
             List<Play> list = new List<Play>();
@@ -161,12 +189,40 @@ namespace TheatreDB.Database
                             ", отзывы.`отзыв`"+
                             ", спектакль.`Название`"+
                             ", посетители.email"+
-                            " FROM"+
+                         " FROM"+
                             " (отзывы"+
-                            " LEFT JOIN `посетители`"+
-                            " ON отзывы.id_login = посетители.id_login)"+
-                            " LEFT JOIN спектакль"+
-                            " ON отзывы.`ID_Спектакля` = спектакль.`ID_спектакля`; ";
+                         " LEFT JOIN `посетители`"+
+                         " ON отзывы.id_login = посетители.id_login)"+
+                         " LEFT JOIN спектакль"+
+                         " ON отзывы.`ID_Спектакля` = спектакль.`ID_спектакля`; ";
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(readReviewData(rdr));
+            }
+
+            rdr.Close();
+
+            return list;
+        }
+
+        public List<Review> getReviewListByName(string playName)
+        {
+            List<Review> list = new List<Review>();
+            MySqlDataReader rdr = null;
+            string stm = string.Format(@"SELECT отзывы.`ID_отзыва`" +
+                                          ", отзывы.`отзыв`" +
+                                          ", спектакль.`Название`" +
+                                          ", посетители.email" +
+                                       " FROM" +
+                                          " (отзывы" +
+                                       " LEFT JOIN `посетители`" +
+                                       " ON отзывы.id_login = посетители.id_login)" +
+                                       " LEFT JOIN спектакль" +
+                                       " ON отзывы.`ID_Спектакля` = спектакль.`ID_спектакля`" +
+                                       " WHERE спектакль.`Название` = '{0}'; ", playName);
             MySqlCommand cmd = new MySqlCommand(stm, connection);
             rdr = cmd.ExecuteReader();
 
@@ -189,6 +245,73 @@ namespace TheatreDB.Database
                 "(SELECT `посетители`.`id_login` FROM `посетители` WHERE `email` = '{2}'));", id, text, loginName, playName);
             MySqlCommand cmd = new MySqlCommand(stm, connection);
             cmd.ExecuteNonQuery();
+        }
+
+        public List<PlayInstance> getPlayInstanceListByName(string playName)
+        {
+            List<PlayInstance> list = new List<PlayInstance>();
+            MySqlDataReader rdr = null;
+            string stm = string.Format(@"SELECT `проведение_спектакля`.`дата_время`," +
+                                 "`спектакль`.`название`," +
+                                 "`проведение_спектакля`.`отменён`," +
+                                 "`проведение_спектакля`.`ID`" +
+                          " FROM `проведение_спектакля` LEFT JOIN `спектакль`" +
+                          " ON `проведение_спектакля`.`id_спектакля`=`спектакль`.`id_спектакля`"+
+                          " WHERE `спектакль`.`название` = '{0}';", playName);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(readPlayInstanceData(rdr));
+            }
+
+            rdr.Close();
+
+            return list;
+        }
+
+        public List<Hall> getHallList()
+        {
+            List<Hall> list = new List<Hall>();
+            MySqlDataReader rdr = null;
+            string stm = @"SELECT название, ID FROM зал";
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(readHallData(rdr));
+            }
+
+            rdr.Close();
+
+            return list;
+        }
+
+        public List<HallSeat> getHallSeatListByHallName(string hallName)
+        {
+            List<HallSeat> list = new List<HallSeat>();
+            MySqlDataReader rdr = null;
+            string stm = string.Format(@"SELECT `места_в_зале`.`ряд`,"+
+                                               "`места_в_зале`.`номер_места`," +
+                                               "`места_в_зале`.`наценка`," +
+                                               "`зал`.`название`," +
+                                               "`места_в_зале`.`ID_места`" +
+                                        "FROM `места_в_зале` LEFT JOIN `зал`"+
+                                          "ON `места_в_зале`.`зал` = `зал`.`ID`"+
+                                        "WHERE `зал`.`название` = '{0}'", hallName);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(readHallSeatData(rdr));
+            }
+
+            rdr.Close();
+
+            return list;
         }
 
         private MySqlConnection connection;

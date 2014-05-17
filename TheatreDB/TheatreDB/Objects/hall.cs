@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace TheatreDB.Objects
 {
-    class Hall
+    public class Hall
     {
+        public string name;
+        public uint ID;
     }
 }
