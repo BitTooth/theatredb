@@ -93,6 +93,7 @@
             this.MinimizeBox = false;
             this.Name = "ClientForm";
             this.Text = "Спектакли";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ClientForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

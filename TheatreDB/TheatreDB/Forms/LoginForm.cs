@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TheatreDB.Database;
+using TheatreDB.Objects;
 
 namespace TheatreDB.Forms
 {
@@ -17,46 +18,32 @@ namespace TheatreDB.Forms
         {
             InitializeComponent();
 
-            admin = new LoginPassPair("root", "123");
+            dbConnection = new TheatreDBConnection();
+            dbConnection.connect();
         }
 
         private void authButton_Click(object sender, EventArgs e)
         {
-            LoginPassPair loginPassPair = new LoginPassPair(loginTextBox.Text, passwordTextBox.Text);
+            customer = dbConnection.tryLogin(loginTextBox.Text, passwordTextBox.Text);
 
-            if (loginPassPair == admin)
+            if (customer == null)
             {
+                MessageBox.Show("Неверная пара логин/пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
+
+            if (customer.ID > 0)
+            {
+                clientForm = new ClientForm(dbConnection, this);
+                clientForm.Show();
                 
-            }
-            else
-            {
-
+                this.Hide();
             }
         }
 
-        struct LoginPassPair
-        {
-            public LoginPassPair(string l, string p)
-            {
-                login = l;
-                password = p;
-            }
+        ClientForm clientForm;
 
-            public static bool operator ==(LoginPassPair a, LoginPassPair b)
-            {
-                if (a.login == b.login && a.password == b.password)
-                    return true;
-
-                return false;
-            }
-
-            public static bool operator !=(LoginPassPair a, LoginPassPair b)
-            {
-                return !(a == b);
-            }
-
-            string login, password;
-        }
-        private LoginPassPair admin; 
+        TheatreDBConnection dbConnection;
+        Customer customer;
     }
 }

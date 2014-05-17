@@ -16,5 +16,10 @@ namespace TheatreDB.Forms
         {
             InitializeComponent();
         }
+
+        private void TicketsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
     }
 }

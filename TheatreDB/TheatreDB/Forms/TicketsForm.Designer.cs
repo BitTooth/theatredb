@@ -72,6 +72,7 @@
             this.MinimizeBox = false;
             this.Name = "TicketsForm";
             this.Text = "Покупа билета";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TicketsForm_FormClosing);
             this.ResumeLayout(false);
 
         }
