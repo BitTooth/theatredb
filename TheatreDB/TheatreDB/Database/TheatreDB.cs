@@ -49,6 +49,16 @@ namespace TheatreDB.Database
             return g;
         }
 
+        private Review readReviewData(MySqlDataReader rdr)
+        {
+            Review r = new Review();
+            r.ID = rdr.GetUInt32(0);
+            r.loginName = rdr.GetString(3);
+            r.playName = rdr.GetString(2);
+            r.review = rdr.GetString(1);
+            return r;
+        }
+
         public List<Play> getPlayList()
         {
             List<Play> list = new List<Play>();
@@ -139,12 +149,22 @@ namespace TheatreDB.Database
         {
             List<Review> list = new List<Review>();
             MySqlDataReader rdr = null;
-            string stm = @"SELECT ID_отзыва, отзыв, спектакль.название, посетители.email FROM отзывы LEFT JOINT ";
+            string stm = @"SELECT отзывы.`ID_отзыва`"+
+                            ", отзывы.`отзыв`"+
+                            ", спектакль.`Название`"+
+                            ", посетители.email"+
+                            " FROM"+
+                            " (отзывы"+
+                            " LEFT JOIN `посетители`"+
+                            " ON отзывы.id_login = посетители.id_login)"+
+                            " LEFT JOIN спектакль"+
+                            " ON отзывы.`ID_Спектакля` = спектакль.`ID_спектакля`; ";
             MySqlCommand cmd = new MySqlCommand(stm, connection);
             rdr = cmd.ExecuteReader();
 
             while (rdr.Read())
             {
+                list.Add(readReviewData(rdr));
             }
 
             return list;
