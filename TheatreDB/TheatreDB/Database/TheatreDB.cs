@@ -189,12 +189,40 @@ namespace TheatreDB.Database
                             ", отзывы.`отзыв`"+
                             ", спектакль.`Название`"+
                             ", посетители.email"+
-                            " FROM"+
+                         " FROM"+
                             " (отзывы"+
-                            " LEFT JOIN `посетители`"+
-                            " ON отзывы.id_login = посетители.id_login)"+
-                            " LEFT JOIN спектакль"+
-                            " ON отзывы.`ID_Спектакля` = спектакль.`ID_спектакля`; ";
+                         " LEFT JOIN `посетители`"+
+                         " ON отзывы.id_login = посетители.id_login)"+
+                         " LEFT JOIN спектакль"+
+                         " ON отзывы.`ID_Спектакля` = спектакль.`ID_спектакля`; ";
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(readReviewData(rdr));
+            }
+
+            rdr.Close();
+
+            return list;
+        }
+
+        public List<Review> getReviewListByName(string playName)
+        {
+            List<Review> list = new List<Review>();
+            MySqlDataReader rdr = null;
+            string stm = string.Format(@"SELECT отзывы.`ID_отзыва`" +
+                                          ", отзывы.`отзыв`" +
+                                          ", спектакль.`Название`" +
+                                          ", посетители.email" +
+                                       " FROM" +
+                                          " (отзывы" +
+                                       " LEFT JOIN `посетители`" +
+                                       " ON отзывы.id_login = посетители.id_login)" +
+                                       " LEFT JOIN спектакль" +
+                                       " ON отзывы.`ID_Спектакля` = спектакль.`ID_спектакля`" +
+                                       " WHERE спектакль.`Название` = '{0}'; ", playName);
             MySqlCommand cmd = new MySqlCommand(stm, connection);
             rdr = cmd.ExecuteReader();
 
