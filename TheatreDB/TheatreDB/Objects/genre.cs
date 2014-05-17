@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TheatreDB.Objects
 {
-    class Genre
+    public class Genre
     {
         public uint     ID;
         public string   name;

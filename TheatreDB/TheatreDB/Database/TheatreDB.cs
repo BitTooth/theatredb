@@ -9,7 +9,7 @@ using MySql.Data.MySqlClient;
 
 namespace TheatreDB.Database
 {
-    class TheatreDBConnection
+    public class TheatreDBConnection
     {
         public void connect()
         {
@@ -133,6 +133,21 @@ namespace TheatreDB.Database
             }
 
             return customer;
+        }
+
+        public List<Review> getReviewList()
+        {
+            List<Review> list = new List<Review>();
+            MySqlDataReader rdr = null;
+            string stm = @"SELECT ID_отзыва, отзыв, спектакль.название, посетители.email FROM отзывы LEFT JOINT ";
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+            }
+
+            return list;
         }
 
         private MySqlConnection connection;
