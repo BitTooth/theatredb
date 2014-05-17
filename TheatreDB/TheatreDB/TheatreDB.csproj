@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,12 +45,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\TheatreDB.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Objects\customer.cs" />
+    <Compile Include="Objects\discount.cs" />
+    <Compile Include="Objects\employee.cs" />
+    <Compile Include="Objects\genre.cs" />
+    <Compile Include="Objects\hall.cs" />
+    <Compile Include="Objects\hall_seat.cs" />
+    <Compile Include="Objects\play.cs" />
+    <Compile Include="Objects\play_customer.cs" />
+    <Compile Include="Objects\play_genre.cs" />
+    <Compile Include="Objects\play_role.cs" />
+    <Compile Include="Objects\play_staff.cs" />
+    <Compile Include="Objects\post.cs" />
+    <Compile Include="Objects\repetition.cs" />
+    <Compile Include="Objects\rep_role.cs" />
+    <Compile Include="Objects\review.cs" />
+    <Compile Include="Objects\staff.cs" />
+    <Compile Include="Objects\ticket.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
