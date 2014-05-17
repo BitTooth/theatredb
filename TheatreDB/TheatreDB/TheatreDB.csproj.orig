@@ -45,9 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\List.cs" />
+<<<<<<< HEAD
     <Compile Include="Database\TheatreDB.cs" />
+    <Compile Include="Form1.cs">
+=======
     <Compile Include="Forms\LoginForm.cs">
+>>>>>>> 81c68fdb95baf8c45a5004d25698de6722067bab
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\LoginForm.Designer.cs">
@@ -101,7 +104,6 @@
   <ItemGroup>
     <Content Include="Database\blank.txt" />
     <Content Include="Objects\blank.txt" />
-    <Content Include="запросы.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

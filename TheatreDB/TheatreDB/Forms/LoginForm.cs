@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TheatreDB.Database;
 
 namespace TheatreDB.Forms
 {
@@ -19,7 +20,7 @@ namespace TheatreDB.Forms
 
         private void authButton_Click(object sender, EventArgs e)
         {
-
+            
         }
     }
 }
