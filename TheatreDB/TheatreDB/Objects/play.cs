@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace TheatreDB.Objects
 {
-    class play
+    class Play
     {
+        public string   name;
+        public string   story;
+        public uint     year;
+        public uint     actorsNum;
+        public uint     discount;
+        public uint     ID;
     }
 }

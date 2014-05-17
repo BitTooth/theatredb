@@ -45,31 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\List.cs" />
+<<<<<<< HEAD
     <Compile Include="Database\TheatreDB.cs" />
-    <Compile Include="Forms\ClientForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ClientForm.Designer.cs">
-      <DependentUpon>ClientForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\FeedbacksForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FeedbacksForm.Designer.cs">
-      <DependentUpon>FeedbacksForm.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Form1.cs">
+=======
     <Compile Include="Forms\LoginForm.cs">
+>>>>>>> 81c68fdb95baf8c45a5004d25698de6722067bab
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\TicketsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TicketsForm.Designer.cs">
-      <DependentUpon>TicketsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Objects\customer.cs" />
     <Compile Include="Objects\discount.cs" />
@@ -90,17 +75,8 @@
     <Compile Include="Objects\ticket.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\ClientForm.resx">
-      <DependentUpon>ClientForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FeedbacksForm.resx">
-      <DependentUpon>FeedbacksForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TicketsForm.resx">
-      <DependentUpon>TicketsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -128,7 +104,6 @@
   <ItemGroup>
     <Content Include="Database\blank.txt" />
     <Content Include="Objects\blank.txt" />
-    <Content Include="запросы.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
