@@ -72,6 +72,8 @@ namespace TheatreDB.Database
                 list.Add(readPlayData(rdr));
             }
 
+            rdr.Close();
+
             return list;
         }
 
@@ -89,6 +91,8 @@ namespace TheatreDB.Database
             {
                 list.Add(readPlayData(rdr));
             }
+
+            rdr.Close();
 
             return list;
         }
@@ -110,6 +114,8 @@ namespace TheatreDB.Database
             {
                 list.Add(readGenreData(rdr));
             }
+
+            rdr.Close();
 
             return list;
         }
@@ -140,6 +146,8 @@ namespace TheatreDB.Database
                     customer.password = rdr.GetString(1);
                     customer.ID = rdr.GetUInt32(0);
                 }
+
+                rdr.Close();
             }
 
             return customer;
@@ -167,7 +175,20 @@ namespace TheatreDB.Database
                 list.Add(readReviewData(rdr));
             }
 
+            rdr.Close();
+
             return list;
+        }
+
+        public void addReview(int id, string text, string loginName, string playName)
+        {
+            string stm = string.Format(@"INSERT INTO `отзывы` (`id_отзыва`, `отзыв`,`id_спектакля`,`id_login`) VALUES("+
+                "{0}," +
+                "'{1}',"+
+                "(SELECT `спектакль`.`ID_спектакля` FROM `спектакль` WHERE `Название` = '{3}')," +
+                "(SELECT `посетители`.`id_login` FROM `посетители` WHERE `email` = '{2}'));", id, text, loginName, playName);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            cmd.ExecuteNonQuery();
         }
 
         private MySqlConnection connection;
