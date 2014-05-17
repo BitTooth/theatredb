@@ -104,6 +104,37 @@ namespace TheatreDB.Database
             return list;
         }
 
+        public Customer tryLogin(string name, string password)
+        {
+            Customer customer = null;
+            if (name == "root" && password == "root")
+            {
+                customer = new Customer();
+                customer.email = "root";
+                customer.password = "root";
+                customer.ID = 0;
+            } 
+            else
+            {
+                MySqlDataReader rdr = null;
+                string stm = string.Format(@"SELECT * FROM посетители WHERE email = '{0}' and пароль = '{1}'", name, password);
+                MySqlCommand cmd = new MySqlCommand(stm, connection);
+                rdr = cmd.ExecuteReader();
+
+                bool found = false;
+                while (rdr.Read())
+                {
+                    found = true;
+                    customer = new Customer();
+                    customer.email = rdr.GetString(2);
+                    customer.password = rdr.GetString(1);
+                    customer.ID = rdr.GetUInt32(0);
+                }
+            }
+
+            return customer;
+        }
+
         private MySqlConnection connection;
     }
 }

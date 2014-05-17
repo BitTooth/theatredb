@@ -8,5 +8,8 @@ namespace TheatreDB.Objects
 {
     class Customer
     {
+        public uint ID;
+        public string password;
+        public string email;
     }
 }
