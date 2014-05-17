@@ -65,6 +65,12 @@
     <Compile Include="Forms\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PlayInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlayInfoForm.Designer.cs">
+      <DependentUpon>PlayInfoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TicketsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlayInfoForm.resx">
+      <DependentUpon>PlayInfoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TicketsForm.resx">
       <DependentUpon>TicketsForm.cs</DependentUpon>
