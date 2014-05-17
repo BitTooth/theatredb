@@ -93,6 +93,7 @@
             this.Name = "LoginForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Авторизация";
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.LoginForm_KeyUp);
             this.ResumeLayout(false);
             this.PerformLayout();
 

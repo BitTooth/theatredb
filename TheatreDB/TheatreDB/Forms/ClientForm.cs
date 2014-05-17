@@ -20,6 +20,14 @@ namespace TheatreDB.Forms
 
             dbConnection = _dbConnection;
             loginForm = _loginForm;
+
+            genresList = dbConnection.getGenreList();
+            genresСomboBox.Items.Add("любой");
+            foreach (Genre genre in genresList)
+            {
+                genresСomboBox.Items.Add(genre.name);
+            }
+            genresСomboBox.SelectedIndex = 0;
         }
 
         private void ClientForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -29,5 +37,22 @@ namespace TheatreDB.Forms
 
         TheatreDBConnection dbConnection;
         LoginForm loginForm;
+
+        List<Genre> genresList;
+
+        private void genresСomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedGenreName = (string)genresСomboBox.SelectedItem;
+
+            uint selectedGenreID = 0;
+            foreach (Genre genre in genresList)
+            {
+                if (selectedGenreName == genre.name)
+                {
+                    selectedGenreID = genre.ID;
+                    break;
+                }
+            }
+        }
     }
 }

@@ -24,6 +24,19 @@ namespace TheatreDB.Forms
 
         private void authButton_Click(object sender, EventArgs e)
         {
+            auth();
+        }
+
+        private void LoginForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                auth();
+            }
+        }
+
+        private void auth()
+        {
             customer = dbConnection.tryLogin(loginTextBox.Text, passwordTextBox.Text);
 
             if (customer == null)
@@ -36,7 +49,7 @@ namespace TheatreDB.Forms
             {
                 clientForm = new ClientForm(dbConnection, this);
                 clientForm.Show();
-                
+
                 this.Hide();
             }
         }

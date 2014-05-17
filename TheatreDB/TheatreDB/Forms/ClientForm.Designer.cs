@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.genreLabel = new System.Windows.Forms.Label();
-            this.genreСomboBox = new System.Windows.Forms.ComboBox();
+            this.genresСomboBox = new System.Windows.Forms.ComboBox();
             this.playsListBox = new System.Windows.Forms.ListBox();
             this.ticketButton = new System.Windows.Forms.Button();
             this.feedbacksButton = new System.Windows.Forms.Button();
@@ -44,13 +44,15 @@
             this.genreLabel.TabIndex = 0;
             this.genreLabel.Text = "Жанр";
             // 
-            // genreСomboBox
+            // genresСomboBox
             // 
-            this.genreСomboBox.FormattingEnabled = true;
-            this.genreСomboBox.Location = new System.Drawing.Point(55, 10);
-            this.genreСomboBox.Name = "genreСomboBox";
-            this.genreСomboBox.Size = new System.Drawing.Size(121, 21);
-            this.genreСomboBox.TabIndex = 1;
+            this.genresСomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.genresСomboBox.FormattingEnabled = true;
+            this.genresСomboBox.Location = new System.Drawing.Point(55, 10);
+            this.genresСomboBox.Name = "genresСomboBox";
+            this.genresСomboBox.Size = new System.Drawing.Size(121, 21);
+            this.genresСomboBox.TabIndex = 1;
+            this.genresСomboBox.SelectedIndexChanged += new System.EventHandler(this.genresСomboBox_SelectedIndexChanged);
             // 
             // playsListBox
             // 
@@ -86,7 +88,7 @@
             this.Controls.Add(this.feedbacksButton);
             this.Controls.Add(this.ticketButton);
             this.Controls.Add(this.playsListBox);
-            this.Controls.Add(this.genreСomboBox);
+            this.Controls.Add(this.genresСomboBox);
             this.Controls.Add(this.genreLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -102,7 +104,7 @@
         #endregion
 
         private System.Windows.Forms.Label genreLabel;
-        private System.Windows.Forms.ComboBox genreСomboBox;
+        private System.Windows.Forms.ComboBox genresСomboBox;
         private System.Windows.Forms.ListBox playsListBox;
         private System.Windows.Forms.Button ticketButton;
         private System.Windows.Forms.Button feedbacksButton;
