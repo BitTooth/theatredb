@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace TheatreDB.Objects
 {
-    class HallSeat
+    public class HallSeat
     {
+        public uint row;
+        public uint num;
+        public string margin;
+        public string hall;
+        public uint ID;
     }
 }
