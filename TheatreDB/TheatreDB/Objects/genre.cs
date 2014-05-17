@@ -8,5 +8,7 @@ namespace TheatreDB.Objects
 {
     class Genre
     {
+        public uint     ID;
+        public string   name;
     }
 }
