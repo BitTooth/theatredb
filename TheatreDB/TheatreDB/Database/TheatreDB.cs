@@ -361,6 +361,32 @@ namespace TheatreDB.Database
 
         // 4)   UPDATE `репетиции` SET `дата_время` = 'дата и время' WHERE `id_репетиции` = 100500;
         //      UPDATE `проведение_спектакля` SET `дата_время` = 'дата и время' WHERE `ID` = 100500;
+        public void updateRepetition(uint ID, string date_time)
+        {
+            string stm = string.Format(@"UPDATE `репетиции` " +
+              "SET `дата_время` = '{1}'" +
+              "WHERE `id_репетиции` = '{0}';", ID, date_time);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void updatePlayDate(uint ID, string date_time)
+        {
+            string stm = string.Format(@"UPDATE FROM `проведение_спектакля` " +
+              "SET `дата_время` = '{1}'" +
+              "WHERE `ID` = '{0}';", ID, date_time);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void updatePlayDate(string name, string date_time)
+        {
+            string stm = string.Format(@"UPDATE FROM `проведение_спектакля` " +
+              " SET `дата_время` = '{1}'" +
+              " WHERE `Название` = '{0}';", name, date_time);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            cmd.ExecuteNonQuery();
+        }
 
         // 5)   INSERT INTO `скидка` (`Название_скидки`, `%_скидки`) VALUES ('пенсионная', '20');
 
