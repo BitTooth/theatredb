@@ -41,13 +41,16 @@
             this.loginTextBox.Name = "loginTextBox";
             this.loginTextBox.Size = new System.Drawing.Size(100, 20);
             this.loginTextBox.TabIndex = 0;
+            this.loginTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.LoginForm_KeyUp);
             // 
             // passwordTextBox
             // 
             this.passwordTextBox.Location = new System.Drawing.Point(71, 38);
             this.passwordTextBox.Name = "passwordTextBox";
+            this.passwordTextBox.PasswordChar = '*';
             this.passwordTextBox.Size = new System.Drawing.Size(100, 20);
             this.passwordTextBox.TabIndex = 1;
+            this.passwordTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.LoginForm_KeyUp);
             // 
             // loginLabel
             // 
