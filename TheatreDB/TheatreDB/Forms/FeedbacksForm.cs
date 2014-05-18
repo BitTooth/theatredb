@@ -34,6 +34,7 @@ namespace TheatreDB.Forms
             int newID = reviewsList.Count() + 1;
 
             dbConnection.addReview(newID, myFeedbackRichTextBox.Text, loginName, playName);
+            myFeedbackRichTextBox.Text = "";
             updateFeedbacks();
         }
 
