@@ -170,10 +170,8 @@ namespace TheatreDB.Database
                 MySqlCommand cmd = new MySqlCommand(stm, connection);
                 rdr = cmd.ExecuteReader();
 
-                bool found = false;
                 while (rdr.Read())
                 {
-                    found = true;
                     customer = new Customer();
                     customer.email = rdr.GetString(2);
                     customer.password = rdr.GetString(1);
