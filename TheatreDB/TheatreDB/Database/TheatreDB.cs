@@ -335,6 +335,29 @@ namespace TheatreDB.Database
         
         // 2)   DELETE FROM `посетители` WHERE `id_login` = 100500;
         //      DELETE FROM `отзывы` WHERE `ID_отзыва` = 100500;
+        public void deleteCustomer(string name)
+        {
+            string stm = string.Format(@"DELETE FROM `посетители` "+
+                "WHERE email = '{0}';", name);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void deleteCustomer(uint ID)
+        {
+            string stm = string.Format(@"DELETE FROM `посетители` " +
+               "WHERE `id_login` = '{0}';", ID);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            cmd.ExecuteNonQuery();  
+        }
+
+        public void deleteReview(uint ID)
+        {
+            string stm = string.Format(@"DELETE FROM `отзывы` " +
+              "WHERE `ID_отзыва` = '{0}';", ID);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            cmd.ExecuteNonQuery();    
+        }
 
         // 4)   UPDATE `репетиции` SET `дата_время` = 'дата и время' WHERE `id_репетиции` = 100500;
         //      UPDATE `проведение_спектакля` SET `дата_время` = 'дата и время' WHERE `ID` = 100500;
