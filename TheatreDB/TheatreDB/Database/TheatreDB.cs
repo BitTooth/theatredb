@@ -88,6 +88,8 @@ namespace TheatreDB.Database
             return hs;
         }
 
+        /*  3) Посмотреть спектакли
+         *     SELECT id_спектакля, название  FROM спектакль */
         public List<Play> getPlayList()
         {
             List<Play> list = new List<Play>();
@@ -106,6 +108,9 @@ namespace TheatreDB.Database
             return list;
         }
         
+        /*  4) Выбрать спектакли по жанру
+         *     SELECT id_жанра,  название  FROM спектакль
+         *          where id_спектакля = @id_жанра          */
         public List<Play> getPlayListByGenre(string name)
         {
             List<Play> list = new List<Play>();
@@ -236,6 +241,8 @@ namespace TheatreDB.Database
             return list;
         }
 
+        /*  1) Написать отзыв 
+         *     INSERT INTO `отзыв` (`отзыв`,`id_спектакля`,`id_login`) VALUES("Ваш спектакль ...","777","666");*/
         public void addReview(int id, string text, string loginName, string playName)
         {
             string stm = string.Format(@"INSERT INTO `отзывы` (`id_отзыва`, `отзыв`,`id_спектакля`,`id_login`) VALUES("+
@@ -313,6 +320,26 @@ namespace TheatreDB.Database
 
             return list;
         }
+
+        //  1) INSERT INTO `посетители` (`email`, `пароль`) VALUES ('i.love@theatre.ru', 'password');- зарегистрироваться
+        public void registerNewCunstomer(Customer customer)
+        {
+            string stm = string.Format(@"INSERT INTO `посетители` (`id_login`, `пароль`, email) VALUES(" +
+                "{0}," +
+                "'{1}'," +
+                "'{2}');", customer.ID, customer.password, customer.email);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            cmd.ExecuteNonQuery();
+        }
+
+        
+        // 2)   DELETE FROM `посетители` WHERE `id_login` = 100500;
+        //      DELETE FROM `отзывы` WHERE `ID_отзыва` = 100500;
+
+        // 4)   UPDATE `репетиции` SET `дата_время` = 'дата и время' WHERE `id_репетиции` = 100500;
+        //      UPDATE `проведение_спектакля` SET `дата_время` = 'дата и время' WHERE `ID` = 100500;
+
+        // 5)   INSERT INTO `скидка` (`Название_скидки`, `%_скидки`) VALUES ('пенсионная', '20');
 
         private MySqlConnection connection;
     }
