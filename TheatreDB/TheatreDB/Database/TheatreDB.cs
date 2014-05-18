@@ -88,6 +88,15 @@ namespace TheatreDB.Database
             return hs;
         }
 
+        private Repetition readRepetitionData(MySqlDataReader rdr)
+        {
+            Repetition r = new Repetition();
+            r.date = rdr.GetString(0);
+            r.ID = rdr.GetUInt32(1);
+            r.playID = rdr.GetUInt32(2);
+            return r;
+        }
+
         /*  3) Посмотреть спектакли
          *     SELECT id_спектакля, название  FROM спектакль */
         public List<Play> getPlayList()
@@ -239,6 +248,51 @@ namespace TheatreDB.Database
             return list;
         }
 
+        public List<Repetition> getRepetitionList()
+        {
+            List<Repetition> list = new List<Repetition>();
+            MySqlDataReader rdr = null;
+            string stm = @"SELECT `дата_время`" +
+                            ", `id_репетиции`" +
+                            ", `id_спектакля`" +
+                         " FROM `репетиции`;" ;
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(readRepetitionData(rdr));
+            }
+
+            rdr.Close();
+
+            return list;
+        }
+
+        public List<Repetition> getRepetitionListByName(string name)
+        {
+            List<Repetition> list = new List<Repetition>();
+            MySqlDataReader rdr = null;
+            string stm = string.Format(@"SELECT `репетиции`.`дата_время`" +
+                                           ", `репетиции`.`id_репетиции`" +
+                                           ", `репетиции`.`id_спектакля`" +
+                                       " FROM `репетиции`" +
+                                       " LEFT JOIN `спектакль`" +
+                                       " ON `репетиции`.`ID_Спектакля` = `спектакль`.`ID_спектакля`" +
+                                       " WHERE `спектакль`.`Название` = '{0}'; ", name);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(readRepetitionData(rdr));
+            }
+
+            rdr.Close();
+
+            return list;
+        }
+
         /*  1) Написать отзыв 
          *     INSERT INTO `отзыв` (`отзыв`,`id_спектакля`,`id_login`) VALUES("Ваш спектакль ...","777","666");*/
         public void addReview(int id, string text, string loginName, string playName)
@@ -373,15 +427,6 @@ namespace TheatreDB.Database
             string stm = string.Format(@"UPDATE `проведение_спектакля` " +
               "SET `дата_время` = '{1}'" +
               "WHERE `ID` = '{0}';", ID, date_time);
-            MySqlCommand cmd = new MySqlCommand(stm, connection);
-            cmd.ExecuteNonQuery();
-        }
-
-        public void updatePlayDate(string name, string date_time)
-        {
-            string stm = string.Format(@"UPDATE `проведение_спектакля` " +
-              " SET `дата_время` = '{1}'" +
-              " WHERE `Название` = '{0}';", name, date_time);
             MySqlCommand cmd = new MySqlCommand(stm, connection);
             cmd.ExecuteNonQuery();
         }

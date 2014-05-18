@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace TheatreDB.Objects
 {
-    class repetition
+    public class Repetition
     {
+        public string date;
+        public uint ID;
+        public uint playID;
     }
 }
