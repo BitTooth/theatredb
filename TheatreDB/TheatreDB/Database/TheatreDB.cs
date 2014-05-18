@@ -372,7 +372,7 @@ namespace TheatreDB.Database
 
         public void updatePlayDate(uint ID, string date_time)
         {
-            string stm = string.Format(@"UPDATE FROM `проведение_спектакля` " +
+            string stm = string.Format(@"UPDATE `проведение_спектакля` " +
               "SET `дата_время` = '{1}'" +
               "WHERE `ID` = '{0}';", ID, date_time);
             MySqlCommand cmd = new MySqlCommand(stm, connection);
@@ -381,7 +381,7 @@ namespace TheatreDB.Database
 
         public void updatePlayDate(string name, string date_time)
         {
-            string stm = string.Format(@"UPDATE FROM `проведение_спектакля` " +
+            string stm = string.Format(@"UPDATE `проведение_спектакля` " +
               " SET `дата_время` = '{1}'" +
               " WHERE `Название` = '{0}';", name, date_time);
             MySqlCommand cmd = new MySqlCommand(stm, connection);
@@ -389,6 +389,14 @@ namespace TheatreDB.Database
         }
 
         // 5)   INSERT INTO `скидка` (`Название_скидки`, `%_скидки`) VALUES ('пенсионная', '20');
+        public void addDiscount(string name, string value)
+        {
+            string stm = string.Format(@"INSERT INTO `скидка` " +
+              " (`Название_скидки`, `%_скидки`)" +
+              " VALUES ('{0}','{1}');", name, value);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            cmd.ExecuteNonQuery();
+        }
 
         private MySqlConnection connection;
     }
