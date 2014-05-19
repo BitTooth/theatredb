@@ -15,12 +15,21 @@ namespace TheatreDB.Forms
     public partial class NewPlayForm : Form
     {
         TheatreDBConnection dbConnection;
+        List<Genre> genresList;
+        uint selectedGenreId;
 
         public NewPlayForm(TheatreDBConnection _dbConnection)
         {
             InitializeComponent();
 
             dbConnection = _dbConnection;
+
+            genresList = dbConnection.getGenreList();
+            foreach (Genre genre in genresList)
+            {
+                genresComboBox.Items.Add(genre.name);
+            }
+            genresComboBox.SelectedIndex = 0;
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -32,7 +41,7 @@ namespace TheatreDB.Forms
             play.actorsNum = Convert.ToUInt32(actsNumericUpDown.Value);
             play.discount = Convert.ToUInt32(discountNumericUpDown.Value);
 
-            play.ID = dbConnection.addPlay(play);
+            play.ID = dbConnection.addPlay(play, selectedGenreId);
 
             Repetition repet = new Repetition();
             repet.playID = play.ID;
@@ -48,6 +57,23 @@ namespace TheatreDB.Forms
             dbConnection.addPlayInstance(playInstance);
 
             this.Close();
+        }
+
+        private void genresComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedGenreName = (string)genresComboBox.SelectedItem;
+
+            Genre selectedGenre = null;
+            foreach (Genre genre in genresList)
+            {
+                if (selectedGenreName == genre.name)
+                {
+                    selectedGenre = genre;
+                    break;
+                }
+            }
+
+            selectedGenreId = selectedGenre.ID;
         }
     }
 }

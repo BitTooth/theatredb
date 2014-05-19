@@ -39,6 +39,8 @@
             this.discountLabel = new System.Windows.Forms.Label();
             this.discountNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.saveButton = new System.Windows.Forms.Button();
+            this.genreLabel = new System.Windows.Forms.Label();
+            this.genresComboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.yearNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.actsNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.discountNumericUpDown)).BeginInit();
@@ -80,7 +82,7 @@
             // yearLabel
             // 
             this.yearLabel.AutoSize = true;
-            this.yearLabel.Location = new System.Drawing.Point(13, 186);
+            this.yearLabel.Location = new System.Drawing.Point(13, 219);
             this.yearLabel.Name = "yearLabel";
             this.yearLabel.Size = new System.Drawing.Size(25, 13);
             this.yearLabel.TabIndex = 4;
@@ -88,7 +90,7 @@
             // 
             // yearNumericUpDown
             // 
-            this.yearNumericUpDown.Location = new System.Drawing.Point(89, 184);
+            this.yearNumericUpDown.Location = new System.Drawing.Point(89, 217);
             this.yearNumericUpDown.Maximum = new decimal(new int[] {
             3000,
             0,
@@ -111,7 +113,7 @@
             // actsLabel
             // 
             this.actsLabel.AutoSize = true;
-            this.actsLabel.Location = new System.Drawing.Point(13, 217);
+            this.actsLabel.Location = new System.Drawing.Point(13, 250);
             this.actsLabel.Name = "actsLabel";
             this.actsLabel.Size = new System.Drawing.Size(67, 13);
             this.actsLabel.TabIndex = 6;
@@ -119,7 +121,7 @@
             // 
             // actsNumericUpDown
             // 
-            this.actsNumericUpDown.Location = new System.Drawing.Point(89, 215);
+            this.actsNumericUpDown.Location = new System.Drawing.Point(89, 248);
             this.actsNumericUpDown.Maximum = new decimal(new int[] {
             5,
             0,
@@ -142,7 +144,7 @@
             // discountLabel
             // 
             this.discountLabel.AutoSize = true;
-            this.discountLabel.Location = new System.Drawing.Point(13, 249);
+            this.discountLabel.Location = new System.Drawing.Point(13, 282);
             this.discountLabel.Name = "discountLabel";
             this.discountLabel.Size = new System.Drawing.Size(44, 13);
             this.discountLabel.TabIndex = 8;
@@ -150,7 +152,7 @@
             // 
             // discountNumericUpDown
             // 
-            this.discountNumericUpDown.Location = new System.Drawing.Point(89, 247);
+            this.discountNumericUpDown.Location = new System.Drawing.Point(89, 280);
             this.discountNumericUpDown.Maximum = new decimal(new int[] {
             99,
             0,
@@ -167,7 +169,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(217, 212);
+            this.saveButton.Location = new System.Drawing.Point(220, 245);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 10;
@@ -175,11 +177,32 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
+            // genreLabel
+            // 
+            this.genreLabel.AutoSize = true;
+            this.genreLabel.Location = new System.Drawing.Point(13, 187);
+            this.genreLabel.Name = "genreLabel";
+            this.genreLabel.Size = new System.Drawing.Size(36, 13);
+            this.genreLabel.TabIndex = 11;
+            this.genreLabel.Text = "Жанр";
+            // 
+            // genresComboBox
+            // 
+            this.genresComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.genresComboBox.FormattingEnabled = true;
+            this.genresComboBox.Location = new System.Drawing.Point(89, 184);
+            this.genresComboBox.Name = "genresComboBox";
+            this.genresComboBox.Size = new System.Drawing.Size(121, 21);
+            this.genresComboBox.TabIndex = 12;
+            this.genresComboBox.SelectedIndexChanged += new System.EventHandler(this.genresComboBox_SelectedIndexChanged);
+            // 
             // NewPlayForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(361, 279);
+            this.ClientSize = new System.Drawing.Size(361, 311);
+            this.Controls.Add(this.genresComboBox);
+            this.Controls.Add(this.genreLabel);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.discountNumericUpDown);
             this.Controls.Add(this.discountLabel);
@@ -217,5 +240,7 @@
         private System.Windows.Forms.Label discountLabel;
         private System.Windows.Forms.NumericUpDown discountNumericUpDown;
         private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Label genreLabel;
+        private System.Windows.Forms.ComboBox genresComboBox;
     }
 }

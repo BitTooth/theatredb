@@ -152,7 +152,8 @@ namespace TheatreDB.Database
             List<Play> list = new List<Play>();
 
             MySqlDataReader rdr = null;
-            string stm = string.Format(@"SELECT *  FROM спектакль  where id_спектакля = (SELECT id_жанра FROM жанры WHERE название_жанра = '{0}')", name);
+            string stm = string.Format(@"SELECT *  FROM спектакль INNER JOIN (SELECT id_спектакля FROM `жанр_в_спектакле` WHERE `id_жанра` = "
+                                        + "(SELECT `id_жанра` FROM `жанры` WHERE `Название_жанра` = '{0}')) AS tbl ON `спектакль`.`id_спектакля` = tbl.`id_спектакля`", name);
             MySqlCommand cmd = new MySqlCommand(stm, connection);
             rdr = cmd.ExecuteReader();
 
@@ -593,24 +594,39 @@ namespace TheatreDB.Database
             cmd.ExecuteNonQuery();
         }
 
-        public uint addPlay(Play p)
+        public uint addPlay(Play p, uint genreId)
         {
             string stm = @"(SELECT MAX(`ID_Спектакля`) FROM `спектакль`)";
             MySqlCommand cmd = new MySqlCommand(stm, connection);
             MySqlDataReader rdr = cmd.ExecuteReader();
 
             rdr.Read();
-            uint id = rdr.GetUInt32(0) + 1;
+            uint playId = rdr.GetUInt32(0) + 1;
             rdr.Close();
 
             stm = string.Format(@"INSERT INTO `спектакль` " +
                 " (`название`, `сюжет`, `год_пост`, `кол-во_акт`, `скидка`, `ID_спектакля`)" +
                 " VALUES ('{0}', '{1}', {2}, {3}, {4}, {5});",
-                p.name, p.story, p.year, p.actorsNum, p.discount, id);
+                p.name, p.story, p.year, p.actorsNum, p.discount, playId);
             cmd = new MySqlCommand(stm, connection);
             cmd.ExecuteNonQuery();
 
-            return id;
+            stm = @"(SELECT MAX(`ID`) FROM `жанр_в_спектакле`)";
+            cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            rdr.Read();
+            uint localGenreId = rdr.GetUInt32(0) + 1;
+            rdr.Close();
+
+            stm = string.Format(@"INSERT INTO `жанр_в_спектакле` " +
+                " (`id_спектакля`, `id_жанра`, `ID`)" +
+                " VALUES ({0}, {1}, {2});",
+                playId, genreId, localGenreId);
+            cmd = new MySqlCommand(stm, connection);
+            cmd.ExecuteNonQuery();
+
+            return playId;
         }
 
         public void addRepetition(Repetition r)
