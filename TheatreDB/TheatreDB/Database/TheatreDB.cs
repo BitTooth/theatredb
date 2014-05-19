@@ -583,6 +583,16 @@ namespace TheatreDB.Database
             cmd.ExecuteNonQuery();
         }
 
+        public void addTicket(Ticket t)
+        {
+            string stm = string.Format(@"INSERT INTO `билет` " +
+                " (`id`, `цена_билета`, `название_скидки`, `сдан`, `ID_места`, `login`, `id_провед_спект`)" +
+                " VALUES ({0}, {1}, '{2}', {3}, {4}, {5}, {6});",
+                t.ID, t.cost, t.discountName, t.returned, t.placeID, t.loginID, t.instanceID);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            cmd.ExecuteNonQuery();
+        }
+
         private MySqlConnection connection;
     }
 }
