@@ -12,12 +12,12 @@ using TheatreDB.Objects;
 
 namespace TheatreDB.Forms
 {
-    public partial class FeedbacksForm : Form
+    public partial class PlayFeedbacksForm : Form
     {
         TheatreDBConnection dbConnection;
         string loginName, playName;
 
-        public FeedbacksForm(TheatreDBConnection _dbConnection, Play play, string _loginName)
+        public PlayFeedbacksForm(TheatreDBConnection _dbConnection, Play play, string _loginName)
         {
             InitializeComponent();
 
@@ -30,10 +30,7 @@ namespace TheatreDB.Forms
 
         private void leaveFeedbackButton_Click(object sender, EventArgs e)
         {
-            List<Review> reviewsList = dbConnection.getReviewList();
-            int newID = reviewsList.Count() + 1;
-
-            dbConnection.addReview(newID, myFeedbackRichTextBox.Text, loginName, playName);
+            dbConnection.addReview(myFeedbackRichTextBox.Text, loginName, playName);
             myFeedbackRichTextBox.Text = "";
             updateFeedbacks();
         }

@@ -1,6 +1,6 @@
 ﻿namespace TheatreDB.Forms
 {
-    partial class FeedbacksForm
+    partial class PlayFeedbacksForm
     {
         /// <summary>
         /// Required designer variable.

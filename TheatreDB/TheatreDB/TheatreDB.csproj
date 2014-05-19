@@ -62,17 +62,23 @@
   <ItemGroup>
     <Compile Include="Database\List.cs" />
     <Compile Include="Database\TheatreDB.cs" />
+    <Compile Include="Forms\AdminForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AdminForm.Designer.cs">
+      <DependentUpon>AdminForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ClientForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ClientForm.Designer.cs">
       <DependentUpon>ClientForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FeedbacksForm.cs">
+    <Compile Include="Forms\PlayFeedbacksForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FeedbacksForm.Designer.cs">
-      <DependentUpon>FeedbacksForm.cs</DependentUpon>
+    <Compile Include="Forms\PlayFeedbacksForm.Designer.cs">
+      <DependentUpon>PlayFeedbacksForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
@@ -91,6 +97,18 @@
     </Compile>
     <Compile Include="Forms\TicketsForm.Designer.cs">
       <DependentUpon>TicketsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CustomerFeedbacksForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CustomerFeedbacksForm.Designer.cs">
+      <DependentUpon>CustomerFeedbacksForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CustomersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CustomersForm.Designer.cs">
+      <DependentUpon>CustomersForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Objects\customer.cs" />
     <Compile Include="Objects\discount.cs" />
@@ -112,11 +130,14 @@
     <Compile Include="Objects\ticket.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\AdminForm.resx">
+      <DependentUpon>AdminForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ClientForm.resx">
       <DependentUpon>ClientForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FeedbacksForm.resx">
-      <DependentUpon>FeedbacksForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PlayFeedbacksForm.resx">
+      <DependentUpon>PlayFeedbacksForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
@@ -126,6 +147,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TicketsForm.resx">
       <DependentUpon>TicketsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CustomerFeedbacksForm.resx">
+      <DependentUpon>CustomerFeedbacksForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CustomersForm.resx">
+      <DependentUpon>CustomersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

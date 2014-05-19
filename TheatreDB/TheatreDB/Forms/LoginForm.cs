@@ -15,6 +15,7 @@ namespace TheatreDB.Forms
     public partial class LoginForm : Form
     {
         ClientForm clientForm;
+        AdminForm adminForm;
 
         TheatreDBConnection dbConnection;
         Customer customer;
@@ -54,9 +55,14 @@ namespace TheatreDB.Forms
             {
                 clientForm = new ClientForm(dbConnection, this);
                 clientForm.Show();
-
-                this.Hide();
             }
+            else
+            {
+                adminForm = new AdminForm(dbConnection, this);
+                adminForm.Show();
+            }
+
+            this.Hide();
         }
 
         public string getLogin()

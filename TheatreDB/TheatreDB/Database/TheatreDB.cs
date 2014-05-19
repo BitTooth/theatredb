@@ -59,6 +59,11 @@ namespace TheatreDB.Database
             return r;
         }
 
+        private int readReviewID(MySqlDataReader rdr)
+        {
+            return (int)rdr.GetUInt32(0);
+        }
+
         private PlayInstance readPlayInstanceData(MySqlDataReader rdr)
         {
             PlayInstance pi = new PlayInstance();
@@ -95,6 +100,15 @@ namespace TheatreDB.Database
             r.ID = rdr.GetUInt32(1);
             r.playID = rdr.GetUInt32(2);
             return r;
+        }
+
+        private Customer readCustomerData(MySqlDataReader rdr)
+        {
+            Customer c = new Customer();
+            c.ID = rdr.GetUInt32(0);
+            c.password = rdr.GetString(1);
+            c.email = rdr.GetString(2);
+            return c;
         }
 
         /*  3) Посмотреть спектакли
@@ -248,6 +262,34 @@ namespace TheatreDB.Database
             return list;
         }
 
+        public List<Review> getReviewListByCustomer(string customerName)
+        {
+            List<Review> list = new List<Review>();
+            MySqlDataReader rdr = null;
+            string stm = string.Format(@"SELECT отзывы.`ID_отзыва`" +
+                                          ", отзывы.`отзыв`" +
+                                          ", спектакль.`Название`" +
+                                          ", посетители.email" +
+                                       " FROM" +
+                                          " (отзывы" +
+                                       " LEFT JOIN `посетители`" +
+                                       " ON отзывы.id_login = посетители.id_login)" +
+                                       " LEFT JOIN спектакль" +
+                                       " ON отзывы.`ID_Спектакля` = спектакль.`ID_спектакля`" +
+                                       " WHERE посетители.`email` = '{0}'; ", customerName);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(readReviewData(rdr));
+            }
+
+            rdr.Close();
+
+            return list;
+        }
+
         public List<Repetition> getRepetitionList()
         {
             List<Repetition> list = new List<Repetition>();
@@ -304,6 +346,19 @@ namespace TheatreDB.Database
                 "(SELECT `посетители`.`id_login` FROM `посетители` WHERE `email` = '{2}'));", id, text, loginName, playName);
             MySqlCommand cmd = new MySqlCommand(stm, connection);
             cmd.ExecuteNonQuery();
+        }
+
+        public void addReview(string text, string loginName, string playName)
+        {
+            string stm = @"(SELECT MAX(`id_отзыва`) FROM `отзывы`)";
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            
+            rdr.Read();
+            int id = readReviewID(rdr) + 1;
+            rdr.Close();
+
+            addReview(id, text, loginName, playName);
         }
 
         public List<PlayInstance> getPlayInstanceListByName(string playName)
@@ -387,6 +442,26 @@ namespace TheatreDB.Database
         
         // 2)   DELETE FROM `посетители` WHERE `id_login` = 100500;
         //      DELETE FROM `отзывы` WHERE `ID_отзыва` = 100500;
+        public List<Customer> getCustomersList()
+        {
+            List<Customer> list = new List<Customer>();
+            MySqlDataReader rdr = null;
+            
+            string stm = @"SELECT * FROM `посетители`;";
+            
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(readCustomerData(rdr));
+            }
+
+            rdr.Close();
+
+            return list;
+        }
+
         public void deleteCustomer(string name)
         {
             string stm = string.Format(@"DELETE FROM `посетители` "+
