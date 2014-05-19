@@ -607,7 +607,7 @@ namespace TheatreDB.Database
         {
             string stm = string.Format(@"INSERT INTO `репетиции` " +
                 " (`дата_время`, `id_репетиции`, `id_спектакля`)" +
-                " VALUES ({0}, {1}, '{2}');",
+                " VALUES (STR_TO_DATE('{0}', '%d.%m.%Y %k:%i:%s'), {1}, '{2}');",
                 r.date, r.ID, r.playID);
             MySqlCommand cmd = new MySqlCommand(stm, connection);
             cmd.ExecuteNonQuery();
@@ -617,7 +617,7 @@ namespace TheatreDB.Database
         {
             string stm = string.Format(@"INSERT INTO `проведение_спектакля` " +
                 " (`дата_время`, `id_спектакля`, `отменён`, `ID`)" +
-                " VALUES ({0}, (SELECT `id_спектакля` FROM `спектакль` WHERE `название` = '{1}'), '{2}', {3});",
+                " VALUES (STR_TO_DATE('{0}', '%d.%m.%Y %k:%i:%s'), (SELECT `id_спектакля` FROM `спектакль` WHERE `название` = '{1}'), '{2}', {3});",
                 pi.date, pi.playName, pi.canceled, pi.ID);
             MySqlCommand cmd = new MySqlCommand(stm, connection);
             cmd.ExecuteNonQuery();
