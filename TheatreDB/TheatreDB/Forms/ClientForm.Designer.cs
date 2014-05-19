@@ -72,6 +72,7 @@
             this.ticketButton.TabIndex = 3;
             this.ticketButton.Text = "Купить билет";
             this.ticketButton.UseVisualStyleBackColor = true;
+            this.ticketButton.Click += new System.EventHandler(this.ticketButton_Click);
             // 
             // feedbacksButton
             // 

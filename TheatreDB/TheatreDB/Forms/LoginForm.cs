@@ -65,9 +65,14 @@ namespace TheatreDB.Forms
             this.Hide();
         }
 
-        public string getLogin()
+        public string getLoginName()
         {
             return customer.email;
+        }
+
+        public uint getLoginID()
+        {
+            return customer.ID;
         }
     }
 }

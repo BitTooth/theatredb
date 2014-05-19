@@ -83,8 +83,14 @@ namespace TheatreDB.Forms
 
         private void feedbacksButton_Click(object sender, EventArgs e)
         {
-            PlayFeedbacksForm feedbacksForm = new PlayFeedbacksForm(dbConnection, selectedPlay, loginForm.getLogin());
+            PlayFeedbacksForm feedbacksForm = new PlayFeedbacksForm(dbConnection, selectedPlay, loginForm.getLoginName());
             feedbacksForm.ShowDialog();
+        }
+
+        private void ticketButton_Click(object sender, EventArgs e)
+        {
+            BuyTicketForm buyTicketForm = new BuyTicketForm(dbConnection, selectedPlay.name, loginForm.getLoginID());
+            buyTicketForm.ShowDialog();
         }
     }
 }

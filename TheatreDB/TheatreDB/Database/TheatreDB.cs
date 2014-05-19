@@ -417,18 +417,20 @@ namespace TheatreDB.Database
             return list;
         }
 
-        public List<HallSeat> getHallSeatListByHallName(string hallName)
+        public List<HallSeat> getHallSeatListByHallName(string hallName, uint playInstanceID)
         {
             List<HallSeat> list = new List<HallSeat>();
             MySqlDataReader rdr = null;
-            string stm = string.Format(@"SELECT `места_в_зале`.`ряд`,"+
+            string stm = string.Format(@"SELECT * FROM (SELECT `места_в_зале`.`ряд`,"+
                                                "`места_в_зале`.`номер_места`," +
                                                "`места_в_зале`.`наценка`," +
                                                "`зал`.`название`," +
                                                "`места_в_зале`.`ID_места`" +
                                         "FROM `места_в_зале` LEFT JOIN `зал`"+
                                           "ON `места_в_зале`.`зал` = `зал`.`ID`"+
-                                        "WHERE `зал`.`название` = '{0}'", hallName);
+                                        "WHERE `зал`.`название` = '{0}') AS tblA LEFT OUTER JOIN ("+
+                                        "SELECT `ID_Места` FROM `билет` WHERE `id_провед_спект` = {1}) AS tblB "+
+                                        "ON tblA.`ID_места` = tblB.`ID_места` WHERE tblB.`ID_места` IS NULL", hallName, playInstanceID);
             MySqlCommand cmd = new MySqlCommand(stm, connection);
             rdr = cmd.ExecuteReader();
 
@@ -586,11 +588,19 @@ namespace TheatreDB.Database
 
         public void addTicket(Ticket t)
         {
-            string stm = string.Format(@"INSERT INTO `билет` " +
-                " (`id`, `цена_билета`, `название_скидки`, `сдан`, `ID_места`, `login`, `id_провед_спект`)" +
-                " VALUES ({0}, {1}, '{2}', {3}, {4}, {5}, {6});",
-                t.ID, t.cost, t.discountName, t.returned, t.placeID, t.loginID, t.instanceID);
+            string stm = @"(SELECT MAX(`id`) FROM `билет`)";
             MySqlCommand cmd = new MySqlCommand(stm, connection);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
+            rdr.Read();
+            uint id = rdr.GetUInt32(0) + 1;
+            rdr.Close();
+
+            stm = string.Format(@"INSERT INTO `билет` " +
+                " (`id`, `цена_билета`, `название_скидки`, `сдан`, `ID_места`, `login`, `id_провед_спект`, `всего_билетов`)" +
+                " VALUES ({0}, {1}, '{2}', {3}, {4}, {5}, {6}, 1000);",
+                id, t.cost, t.discountName, t.returned, t.placeID, t.loginID, t.instanceID);
+            cmd = new MySqlCommand(stm, connection);
             cmd.ExecuteNonQuery();
         }
 
