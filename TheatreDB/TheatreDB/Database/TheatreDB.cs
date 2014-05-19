@@ -593,6 +593,36 @@ namespace TheatreDB.Database
             cmd.ExecuteNonQuery();
         }
 
+        public void addPlay(Play p)
+        {
+            string stm = string.Format(@"INSERT INTO `спектакль` " +
+                " (`название`, `сюжет`, `год_пост`, `кол-во_акт`, `скидка`, `ID_спектакля`)" +
+                " VALUES ({0}, {1}, '{2}', {3}, {4}, {5});",
+                p.name, p.story, p.year, p.actorsNum, p.discount, p.ID);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void addRepetition(Repetition r)
+        {
+            string stm = string.Format(@"INSERT INTO `репетиции` " +
+                " (`дата_время`, `id_репетиции`, `id_спектакля`)" +
+                " VALUES ({0}, {1}, '{2}');",
+                r.date, r.ID, r.playID);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void addPlayInstance(PlayInstance pi)
+        {
+            string stm = string.Format(@"INSERT INTO `проведение_спектакля` " +
+                " (`дата_время`, `id_спектакля`, `отменён`, `ID`)" +
+                " VALUES ({0}, (SELECT `id_спектакля` FROM `спектакль` WHERE `название` = '{1}'), '{2}', {3});",
+                pi.date, pi.playName, pi.canceled, pi.ID);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            cmd.ExecuteNonQuery();
+        }
+
         private MySqlConnection connection;
     }
 }
