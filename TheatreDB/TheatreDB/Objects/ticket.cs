@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace TheatreDB.Objects
 {
-    class Ticket
+    public class Ticket
     {
+        public uint ID;
+        public uint cost;
+        public string discountName;
+        public bool returned;
+        public uint placeID;
+        public uint loginID;
+        public uint instanceID;
     }
 }

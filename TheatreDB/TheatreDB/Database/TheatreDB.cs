@@ -111,6 +111,19 @@ namespace TheatreDB.Database
             return c;
         }
 
+        private Ticket readTicketData(MySqlDataReader rdr)
+        {
+            Ticket t = new Ticket();
+            t.ID = rdr.GetUInt32(0);
+            t.cost = rdr.GetUInt32(1);
+            t.discountName = rdr.GetString(2);
+            t.returned = rdr.GetBoolean(3);
+            t.placeID = rdr.GetUInt32(4);
+            t.loginID = rdr.GetUInt32(5);
+            t.instanceID = rdr.GetUInt32(6);
+            return t;
+        }
+
         /*  3) Посмотреть спектакли
          *     SELECT id_спектакля, название  FROM спектакль */
         public List<Play> getPlayList()
@@ -421,6 +434,51 @@ namespace TheatreDB.Database
             while (rdr.Read())
             {
                 list.Add(readHallSeatData(rdr));
+            }
+
+            rdr.Close();
+
+            return list;
+        }
+
+        public List<Ticket> getTicketList()
+        {
+            List<Ticket> list = new List<Ticket>();
+            MySqlDataReader rdr = null;
+            string stm = @"SELECT id, `цена_билета`, `название_скидки`, `сдан`, `ID_места`, `login`, `id_провед_спект` FROM `билет`";
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(readTicketData(rdr));
+            }
+
+            rdr.Close();
+
+            return list;
+        }
+
+        public List<Ticket> getTicketListByLogin(string login)
+        {
+            List<Ticket> list = new List<Ticket>();
+            MySqlDataReader rdr = null;
+            string stm = string.Format(@"SELECT `билет`.id," +
+                                               "`билет`.`цена_билета`," +
+                                               "`билет`.`название_скидки`," +
+                                               "`посетители`.`id_login`," +
+                                               "`билет`.`ID_места`" +
+                                               "`билет`.`login`" +
+                                               "`билет`.`id_провед_спект`" +
+                                        "FROM `билет` LEFT JOIN `зал`" +
+                                          "ON `посетители`.`id_login` = `билет`.`login`" +
+                                        "WHERE `посетители`.`email` = '{0}'", login);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(readTicketData(rdr));
             }
 
             rdr.Close();
