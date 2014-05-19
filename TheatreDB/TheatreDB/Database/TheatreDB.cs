@@ -558,7 +558,7 @@ namespace TheatreDB.Database
         public void updateRepetition(uint ID, string date_time)
         {
             string stm = string.Format(@"UPDATE `репетиции` " +
-              "SET `дата_время` = '{1}'" +
+              "SET `дата_время` = STR_TO_DATE('{1}', '%d.%m.%Y %k:%i:%s') " +
               "WHERE `id_репетиции` = '{0}';", ID, date_time);
             MySqlCommand cmd = new MySqlCommand(stm, connection);
             cmd.ExecuteNonQuery();
@@ -567,7 +567,7 @@ namespace TheatreDB.Database
         public void updatePlayDate(uint ID, string date_time)
         {
             string stm = string.Format(@"UPDATE `проведение_спектакля` " +
-              "SET `дата_время` = '{1}'" +
+              "SET `дата_время` = STR_TO_DATE('{1}', '%d.%m.%Y %k:%i:%s') " +
               "WHERE `ID` = '{0}';", ID, date_time);
             MySqlCommand cmd = new MySqlCommand(stm, connection);
             cmd.ExecuteNonQuery();

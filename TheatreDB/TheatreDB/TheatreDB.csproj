@@ -74,6 +74,12 @@
     <Compile Include="Forms\ClientForm.Designer.cs">
       <DependentUpon>ClientForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\EditPlayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditPlayForm.Designer.cs">
+      <DependentUpon>EditPlayForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PlayFeedbacksForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +97,12 @@
     </Compile>
     <Compile Include="Forms\PlayInfoForm.Designer.cs">
       <DependentUpon>PlayInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PlaysForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlaysForm.Designer.cs">
+      <DependentUpon>PlaysForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\TicketsForm.cs">
       <SubType>Form</SubType>
@@ -136,6 +148,9 @@
     <EmbeddedResource Include="Forms\ClientForm.resx">
       <DependentUpon>ClientForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditPlayForm.resx">
+      <DependentUpon>EditPlayForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlayFeedbacksForm.resx">
       <DependentUpon>PlayFeedbacksForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -144,6 +159,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlayInfoForm.resx">
       <DependentUpon>PlayInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlaysForm.resx">
+      <DependentUpon>PlaysForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TicketsForm.resx">
       <DependentUpon>TicketsForm.cs</DependentUpon>

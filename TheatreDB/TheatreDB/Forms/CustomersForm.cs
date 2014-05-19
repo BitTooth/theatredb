@@ -16,7 +16,7 @@ namespace TheatreDB.Forms
     {
         TheatreDBConnection dbConnection;
         AdminForm adminForm;
-        List<Customer> customersLst;
+        List<Customer> customersList;
         Customer selectedCustomer;
 
         public CustomersForm(TheatreDBConnection _dbConnection, AdminForm _adminForm)
@@ -32,10 +32,10 @@ namespace TheatreDB.Forms
 
         private void updateCustomersListBox()
         {
-            customersLst = dbConnection.getCustomersList();
+            customersList = dbConnection.getCustomersList();
 
             customersListBox.Items.Clear();
-            foreach (Customer customer in customersLst)
+            foreach (Customer customer in customersList)
             {
                 customersListBox.Items.Add(customer.email);
             }
@@ -49,7 +49,7 @@ namespace TheatreDB.Forms
         private void customersListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selectedCustomerName = (string)customersListBox.SelectedItem;
-            foreach (Customer customer in customersLst)
+            foreach (Customer customer in customersList)
             {
                 if (customer.email == selectedCustomerName)
                 {
