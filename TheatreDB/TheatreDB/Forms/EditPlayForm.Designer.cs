@@ -37,6 +37,8 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.prevInstButton = new System.Windows.Forms.Button();
             this.nextInstButton = new System.Windows.Forms.Button();
+            this.repetAddButton = new System.Windows.Forms.Button();
+            this.instAddButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // repetLabel
@@ -65,6 +67,7 @@
             this.instanceTimePicker.Name = "instanceTimePicker";
             this.instanceTimePicker.Size = new System.Drawing.Size(141, 20);
             this.instanceTimePicker.TabIndex = 3;
+            this.instanceTimePicker.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             // 
             // repetTimePicker
             // 
@@ -74,6 +77,7 @@
             this.repetTimePicker.Name = "repetTimePicker";
             this.repetTimePicker.Size = new System.Drawing.Size(141, 20);
             this.repetTimePicker.TabIndex = 4;
+            this.repetTimePicker.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             // 
             // prevRepetButton
             // 
@@ -97,9 +101,9 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(237, 61);
+            this.saveButton.Location = new System.Drawing.Point(262, 62);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(75, 23);
+            this.saveButton.Size = new System.Drawing.Size(88, 23);
             this.saveButton.TabIndex = 7;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
@@ -125,11 +129,33 @@
             this.nextInstButton.UseVisualStyleBackColor = true;
             this.nextInstButton.Click += new System.EventHandler(this.nextInstButton_Click);
             // 
+            // repetAddButton
+            // 
+            this.repetAddButton.Location = new System.Drawing.Point(328, 11);
+            this.repetAddButton.Name = "repetAddButton";
+            this.repetAddButton.Size = new System.Drawing.Size(22, 22);
+            this.repetAddButton.TabIndex = 10;
+            this.repetAddButton.Text = "+";
+            this.repetAddButton.UseVisualStyleBackColor = true;
+            this.repetAddButton.Click += new System.EventHandler(this.repetAddButton_Click);
+            // 
+            // instAddButton
+            // 
+            this.instAddButton.Location = new System.Drawing.Point(328, 34);
+            this.instAddButton.Name = "instAddButton";
+            this.instAddButton.Size = new System.Drawing.Size(22, 22);
+            this.instAddButton.TabIndex = 11;
+            this.instAddButton.Text = "+";
+            this.instAddButton.UseVisualStyleBackColor = true;
+            this.instAddButton.Click += new System.EventHandler(this.instAddButton_Click);
+            // 
             // EditPlayForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(323, 94);
+            this.ClientSize = new System.Drawing.Size(359, 94);
+            this.Controls.Add(this.instAddButton);
+            this.Controls.Add(this.repetAddButton);
             this.Controls.Add(this.nextInstButton);
             this.Controls.Add(this.prevInstButton);
             this.Controls.Add(this.saveButton);
@@ -160,5 +186,7 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button prevInstButton;
         private System.Windows.Forms.Button nextInstButton;
+        private System.Windows.Forms.Button repetAddButton;
+        private System.Windows.Forms.Button instAddButton;
     }
 }

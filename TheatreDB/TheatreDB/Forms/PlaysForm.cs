@@ -43,13 +43,16 @@ namespace TheatreDB.Forms
 
         private void editButton_Click(object sender, EventArgs e)
         {
-            EditPlayForm editPlayForm = new EditPlayForm(dbConnection, selectedPlay.name);
+            EditPlayForm editPlayForm = new EditPlayForm(dbConnection, selectedPlay);
             editPlayForm.ShowDialog();
         }
 
         private void newButton_Click(object sender, EventArgs e)
         {
+            NewPlayForm newPlayForm = new NewPlayForm(dbConnection);
+            newPlayForm.ShowDialog();
 
+            updatePlaysListBox();
         }
 
         private void PlaysForm_FormClosing(object sender, FormClosingEventArgs e)

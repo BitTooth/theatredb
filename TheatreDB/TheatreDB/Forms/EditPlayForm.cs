@@ -15,23 +15,29 @@ namespace TheatreDB.Forms
     public partial class EditPlayForm : Form
     {
         TheatreDBConnection dbConnection;
-        string playName;
+        Play play;
 
         List<Repetition> repetitionList;
         List<PlayInstance> playInstanceList;
 
+        int repetOriginalCount;
+        int instOriginalCount;
+
         int repetSelectedIndex;
         int instSelectedIndex;
 
-        public EditPlayForm(TheatreDBConnection _dbConnection, string _playName)
+        public EditPlayForm(TheatreDBConnection _dbConnection, Play _play)
         {
             InitializeComponent();
 
             dbConnection = _dbConnection;
-            playName = _playName;
+            play = _play;
 
-            repetitionList = dbConnection.getRepetitionListByName(playName);
-            playInstanceList = dbConnection.getPlayInstanceListByName(playName);
+            repetitionList = dbConnection.getRepetitionListByName(play.name);
+            playInstanceList = dbConnection.getPlayInstanceListByName(play.name);
+
+            repetOriginalCount = repetitionList.Count;
+            instOriginalCount = playInstanceList.Count;
 
             repetSelectedIndex = 0;
             instSelectedIndex = 0;
@@ -65,6 +71,8 @@ namespace TheatreDB.Forms
         {
             if (repetSelectedIndex > 0)
             {
+                repetitionList[repetSelectedIndex].date = repetTimePicker.Text;
+
                 --repetSelectedIndex;
                 nextRepetButton.Enabled = true;
             }
@@ -76,6 +84,8 @@ namespace TheatreDB.Forms
         {
             if (repetSelectedIndex < repetitionList.Count - 1)
             {
+                repetitionList[repetSelectedIndex].date = repetTimePicker.Text;
+
                 ++repetSelectedIndex;
                 prevRepetButton.Enabled = true;
             }
@@ -87,6 +97,8 @@ namespace TheatreDB.Forms
         {
             if (instSelectedIndex > 0)
             {
+                playInstanceList[instSelectedIndex].date = instanceTimePicker.Text;
+
                 --instSelectedIndex;
                 nextInstButton.Enabled = true;
             }
@@ -98,6 +110,8 @@ namespace TheatreDB.Forms
         {
             if (instSelectedIndex < playInstanceList.Count - 1)
             {
+                playInstanceList[instSelectedIndex].date = instanceTimePicker.Text;
+
                 ++instSelectedIndex;
                 prevInstButton.Enabled = true;
             }
@@ -107,11 +121,71 @@ namespace TheatreDB.Forms
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            if (repetitionList.Count > 0)
-                dbConnection.updateRepetition(repetitionList[repetSelectedIndex].ID, repetTimePicker.Text);
+            repetitionList[repetSelectedIndex].date = repetTimePicker.Text;
 
-            if (playInstanceList.Count > 0)
-                dbConnection.updatePlayDate(playInstanceList[instSelectedIndex].ID, instanceTimePicker.Text);
+            for (int i = 0; i < repetOriginalCount; ++i)
+                dbConnection.updateRepetition(repetitionList[i].ID, repetitionList[i].date);
+
+            for (int i = repetOriginalCount; i < repetitionList.Count; ++i)
+            {
+                Repetition repet = new Repetition();
+                repet.date = repetitionList[i].date;
+                repet.playID = play.ID;
+
+                dbConnection.addRepetition(repetitionList[i]);
+            }
+
+            if (repetOriginalCount < repetitionList.Count)
+                repetOriginalCount = repetitionList.Count;
+
+            //////////////////////////////////////////////////////////////////////////////////
+
+            playInstanceList[instSelectedIndex].date = instanceTimePicker.Text;
+
+            for (int i = 0; i < instOriginalCount; ++i)
+                dbConnection.updatePlayDate(playInstanceList[i].ID, playInstanceList[i].date);
+
+            for (int i = instOriginalCount; i < playInstanceList.Count; ++i)
+            {
+                PlayInstance playInstance = new PlayInstance();
+                playInstance.canceled = false;
+                playInstance.date = playInstanceList[i].date;
+                playInstance.playName = playInstanceList[i].playName;
+
+                dbConnection.addPlayInstance(playInstanceList[i]);
+            }
+
+            if (instOriginalCount < playInstanceList.Count)
+                instOriginalCount = playInstanceList.Count;
+        }
+
+        private void repetAddButton_Click(object sender, EventArgs e)
+        {
+            Repetition repet = new Repetition();
+            repet.date = "01.01.2014 01:01:01";
+            repet.playID = play.ID;
+
+            repetitionList.Add(repet);
+            repetSelectedIndex = repetitionList.Count - 1;
+            prevRepetButton.Enabled = true;
+            nextRepetButton.Enabled = false;
+
+            repetTimePicker.Text = "01.01.2000 01:01:01";
+        }
+
+        private void instAddButton_Click(object sender, EventArgs e)
+        {
+            PlayInstance playInstance = new PlayInstance();
+            playInstance.canceled = false;
+            playInstance.date = "01.01.2014 01:01:01";
+            playInstance.playName = play.name;
+
+            playInstanceList.Add(playInstance);
+            instSelectedIndex = playInstanceList.Count - 1;
+            prevInstButton.Enabled = true;
+            nextInstButton.Enabled = false;
+
+            instanceTimePicker.Text = "01.01.2000 01:01:01";
         }
     }
 }

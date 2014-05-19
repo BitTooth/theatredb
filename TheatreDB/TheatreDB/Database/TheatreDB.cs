@@ -593,33 +593,59 @@ namespace TheatreDB.Database
             cmd.ExecuteNonQuery();
         }
 
-        public void addPlay(Play p)
+        public uint addPlay(Play p)
         {
-            string stm = string.Format(@"INSERT INTO `спектакль` " +
-                " (`название`, `сюжет`, `год_пост`, `кол-во_акт`, `скидка`, `ID_спектакля`)" +
-                " VALUES ({0}, {1}, '{2}', {3}, {4}, {5});",
-                p.name, p.story, p.year, p.actorsNum, p.discount, p.ID);
+            string stm = @"(SELECT MAX(`ID_Спектакля`) FROM `спектакль`)";
             MySqlCommand cmd = new MySqlCommand(stm, connection);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
+            rdr.Read();
+            uint id = rdr.GetUInt32(0) + 1;
+            rdr.Close();
+
+            stm = string.Format(@"INSERT INTO `спектакль` " +
+                " (`название`, `сюжет`, `год_пост`, `кол-во_акт`, `скидка`, `ID_спектакля`)" +
+                " VALUES ('{0}', '{1}', {2}, {3}, {4}, {5});",
+                p.name, p.story, p.year, p.actorsNum, p.discount, id);
+            cmd = new MySqlCommand(stm, connection);
             cmd.ExecuteNonQuery();
+
+            return id;
         }
 
         public void addRepetition(Repetition r)
         {
-            string stm = string.Format(@"INSERT INTO `репетиции` " +
+            string stm = @"(SELECT MAX(`id_репетиции`) FROM `репетиции`)";
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
+            rdr.Read();
+            uint id = rdr.GetUInt32(0) + 1;
+            rdr.Close();
+
+            stm = string.Format(@"INSERT INTO `репетиции` " +
                 " (`дата_время`, `id_репетиции`, `id_спектакля`)" +
                 " VALUES (STR_TO_DATE('{0}', '%d.%m.%Y %k:%i:%s'), {1}, '{2}');",
                 r.date, r.ID, r.playID);
-            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            cmd = new MySqlCommand(stm, connection);
             cmd.ExecuteNonQuery();
         }
 
         public void addPlayInstance(PlayInstance pi)
         {
-            string stm = string.Format(@"INSERT INTO `проведение_спектакля` " +
+            string stm = @"(SELECT MAX(`id_спектакля`) FROM `проведение_спектакля`)";
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
+            rdr.Read();
+            uint id = rdr.GetUInt32(0) + 1;
+            rdr.Close();
+
+            stm = string.Format(@"INSERT INTO `проведение_спектакля` " +
                 " (`дата_время`, `id_спектакля`, `отменён`, `ID`)" +
                 " VALUES (STR_TO_DATE('{0}', '%d.%m.%Y %k:%i:%s'), (SELECT `id_спектакля` FROM `спектакль` WHERE `название` = '{1}'), '{2}', {3});",
-                pi.date, pi.playName, pi.canceled, pi.ID);
-            MySqlCommand cmd = new MySqlCommand(stm, connection);
+                pi.date, pi.playName, (pi.canceled)? 1 : 0, pi.ID);
+            cmd = new MySqlCommand(stm, connection);
             cmd.ExecuteNonQuery();
         }
 
