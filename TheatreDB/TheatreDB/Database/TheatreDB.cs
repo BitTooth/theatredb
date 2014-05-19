@@ -466,13 +466,14 @@ namespace TheatreDB.Database
             string stm = string.Format(@"SELECT `билет`.id," +
                                                "`билет`.`цена_билета`," +
                                                "`билет`.`название_скидки`," +
-                                               "`посетители`.`id_login`," +
-                                               "`билет`.`ID_места`" +
-                                               "`билет`.`login`" +
-                                               "`билет`.`id_провед_спект`" +
-                                        "FROM `билет` LEFT JOIN `зал`" +
-                                          "ON `посетители`.`id_login` = `билет`.`login`" +
-                                        "WHERE `посетители`.`email` = '{0}'", login);
+                                               "`билет`.`сдан`," +
+                                               "`билет`.`ID_места`," +
+                                               "`билет`.`login`," +
+                                               "`билет`.`id_провед_спект`," +
+                                               "`посетители`.email " +
+                                        "FROM `билет` LEFT JOIN `посетители` " +
+                                          "ON `билет`.`login` = `посетители`.`id_login` " +
+                                        "WHERE `посетители`.email = '{0}';", login);
             MySqlCommand cmd = new MySqlCommand(stm, connection);
             rdr = cmd.ExecuteReader();
 
@@ -518,6 +519,14 @@ namespace TheatreDB.Database
             rdr.Close();
 
             return list;
+        }
+
+        public void deleteCustomerTickets(uint customerID)
+        {
+            string stm = string.Format(@"DELETE FROM `билет` " +
+                "WHERE login = '{0}';", customerID);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            cmd.ExecuteNonQuery();
         }
 
         public void deleteCustomer(string name)

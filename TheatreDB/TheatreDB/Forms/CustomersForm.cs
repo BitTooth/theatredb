@@ -17,7 +17,7 @@ namespace TheatreDB.Forms
         TheatreDBConnection dbConnection;
         AdminForm adminForm;
         List<Customer> customersLst;
-        string selectedCustomerName;
+        Customer selectedCustomer;
 
         public CustomersForm(TheatreDBConnection _dbConnection, AdminForm _adminForm)
         {
@@ -48,18 +48,38 @@ namespace TheatreDB.Forms
 
         private void customersListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selectedCustomerName = (string)customersListBox.SelectedItem;
+            string selectedCustomerName = (string)customersListBox.SelectedItem;
+            foreach (Customer customer in customersLst)
+            {
+                if (customer.email == selectedCustomerName)
+                {
+                    selectedCustomer = customer;
+                    break;
+                }
+            }
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
-            dbConnection.deleteCustomer(selectedCustomerName);
+            List<Review> reviewsList = dbConnection.getReviewListByCustomer(selectedCustomer.email);
+            foreach (Review review in reviewsList)
+            {
+                dbConnection.deleteReview(review.ID);
+            }
+
+            List<Ticket> ticketsList = dbConnection.getTicketListByLogin(selectedCustomer.email);
+            foreach (Ticket ticket in ticketsList)
+            {
+                dbConnection.deleteCustomerTickets(selectedCustomer.ID);
+            }
+
+            dbConnection.deleteCustomer(selectedCustomer.email);
             updateCustomersListBox();
         }
 
         private void feedbacksButton_Click(object sender, EventArgs e)
         {
-            CustomerFeedbacksForm customerFeedbacksForm = new CustomerFeedbacksForm(dbConnection, selectedCustomerName);
+            CustomerFeedbacksForm customerFeedbacksForm = new CustomerFeedbacksForm(dbConnection, selectedCustomer.email);
             customerFeedbacksForm.ShowDialog();
         }
     }
