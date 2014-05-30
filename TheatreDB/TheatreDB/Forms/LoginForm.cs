@@ -74,5 +74,15 @@ namespace TheatreDB.Forms
         {
             return customer.ID;
         }
+
+        private void newButton_Click(object sender, EventArgs e)
+        {
+            customer = new Customer();
+            customer.email = loginTextBox.Text;
+            customer.password = passwordTextBox.Text;
+
+            dbConnection.registerNewCunstomer(customer);
+            auth();
+        }
     }
 }

@@ -493,11 +493,19 @@ namespace TheatreDB.Database
         //  1) INSERT INTO `посетители` (`email`, `пароль`) VALUES ('i.love@theatre.ru', 'password');- зарегистрироваться
         public void registerNewCunstomer(Customer customer)
         {
-            string stm = string.Format(@"INSERT INTO `посетители` (`id_login`, `пароль`, email) VALUES(" +
+            string stm = @"(SELECT MAX(`id_login`) FROM `посетители`)";
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
+            rdr.Read();
+            uint customerId = rdr.GetUInt32(0) + 1;
+            rdr.Close();
+
+            stm = string.Format(@"INSERT INTO `посетители` (`id_login`, `пароль`, email) VALUES(" +
                 "{0}," +
                 "'{1}'," +
-                "'{2}');", customer.ID, customer.password, customer.email);
-            MySqlCommand cmd = new MySqlCommand(stm, connection);
+                "'{2}');", customerId, customer.password, customer.email);
+            cmd = new MySqlCommand(stm, connection);
             cmd.ExecuteNonQuery();
         }
 
