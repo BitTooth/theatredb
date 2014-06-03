@@ -41,6 +41,13 @@ namespace TheatreDB.Database
             return pl;
         }
 
+        private Employee readEmployeeData(MySqlDataReader rdr)
+        {
+            Employee emp = new Employee();
+            emp.name = rdr.GetString(0);
+            return emp;
+        }
+
         private Genre readGenreData(MySqlDataReader rdr)
         {
             Genre g = new Genre();
@@ -122,6 +129,25 @@ namespace TheatreDB.Database
             t.loginID = rdr.GetUInt32(5);
             t.instanceID = rdr.GetUInt32(6);
             return t;
+        }
+
+        public List<Employee> getActorsList()
+        {
+            List<Employee> list = new List<Employee>();
+            MySqlDataReader rdr = null;
+            string stm = @"SELECT `ФИО` FROM `сотрудники` WHERE `ID_Должности` = "
+                + "(SELECT `ID_Должности` FROM `должность` WHERE `Название` = 'Актёры')";
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                list.Add(readEmployeeData(rdr));
+            }
+
+            rdr.Close();
+
+            return list;
         }
 
         /*  3) Посмотреть спектакли

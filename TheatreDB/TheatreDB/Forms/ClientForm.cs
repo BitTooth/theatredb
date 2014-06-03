@@ -36,6 +36,12 @@ namespace TheatreDB.Forms
                 genresСomboBox.Items.Add(genre.name);
             }
             genresСomboBox.SelectedIndex = 0;
+
+            List<Employee> actorsList = dbConnection.getActorsList();
+            foreach (Employee employee in actorsList)
+            {
+                actorsListBox.Items.Add(employee.name);
+            }
         }
 
         private void ClientForm_FormClosing(object sender, FormClosingEventArgs e)
