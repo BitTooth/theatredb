@@ -81,8 +81,13 @@ namespace TheatreDB.Forms
             customer.email = loginTextBox.Text;
             customer.password = passwordTextBox.Text;
 
-            dbConnection.registerNewCunstomer(customer);
-            auth();
+            if (dbConnection.checkCustomer(customer.email))
+            {
+                dbConnection.registerNewCunstomer(customer);
+                auth();
+            }
+            else
+                MessageBox.Show("Such user already exist");
         }
     }
 }

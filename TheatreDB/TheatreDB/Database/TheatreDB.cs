@@ -247,6 +247,23 @@ namespace TheatreDB.Database
             return customer;
         }
 
+        public bool checkCustomer(string email)
+        {
+            MySqlDataReader rdr = null;
+            string stm = string.Format(@"SELECT * FROM посетители WHERE email = '{0}'", email);
+            MySqlCommand cmd = new MySqlCommand(stm, connection);
+            rdr = cmd.ExecuteReader();
+
+            bool res = true;
+            while (rdr.Read())
+            {
+                res = false;
+            }
+
+            rdr.Close();
+            return res;
+        }
+
         public List<Review> getReviewList()
         {
             List<Review> list = new List<Review>();
